@@ -1,4 +1,4 @@
-
+            
 \documentclass{article}
 \usepackage{float}
 \usepackage{tabularx}
@@ -396,6 +396,7 @@ More than 99\% of higher taxonomic nodes in VTO lack direct phenotype annotation
 % Compare the size of ontology you would need to reason over in the absence of the on-demand subsumer trickery
 In the absence of a pre-composed EQ ontology, estimating similarity between evolutionary and gene phenotypes would require the infeasible task of reasoning over 36 million EQ classes - the combination of Uberon and PATO ontologies. Restricting the quality annotation granularity to the set of quality attributes significantly reduced the size of the combinatorial EQ space to 210,000 classes. The addition of corresponding EQ subsumers (built using OWL templates in \ref{reasoning}) and pre-composed gene phenotype classes brought the size of our comprehensive ontology to about 751,830 classes. This comprehensive ontology is still a significant reduction from the 36 million class space and enables reasoning over EQ annotations to estimate semantic similarity between gene and evolutionary phenotypes. 
 
+%Test
 % Is it an assumption (in which case can it be justified?) or is it a strategy (in which case is it successful?)
 % It is a strategy based on the assumption that granularity of qualities doesn't matter. As a strategy, it is successful since it reduced the ontology size enough to do EQ similarity. However, we don't have results to show justify the assumption. 
 
