@@ -302,6 +302,16 @@ A new set of 207 faux query profiles were created by randomly selecting one prof
 
 To compute an expect score for a similarity comparison during the substitution experiment, the residual was computed by computing the difference between the observed similarity and the predicted similarity from the regression. This residual was studentized by dividing it by the standard deviation of the regression's residuals and used in the expect calculation (Equation \label{pvalue},\label{expect})
 
+
+\subsubsection{Goals}
+The aims of the semantic similarity experiment are the following: 
+\begin{enumerate}
+\item Determine the best approach to compute IC for semantic similarity. Prior literature either uses annotation frequency or the probability of a term being annotated to a profile to compute IC. No formal comparison has been made between the two approaches to determine which is better. Determine the best profile comparison approach between Best Pairs (asymmetric), Best Pairs (symmetric) and All Pairs. A total of 6 combinations (2 IC approaches, three profile comparison methds) will be evaluated here. [Prashanti]
+\item Determine if the similarity and expect scores can capture the decay in similarity as query profiles are diluted incrementally by replacing annotations randomly. Also determine if the similarity and expect scores have the power to distinguish signal from noise. [Kevin]
+\item Compare a set of semantic similarity metrics to determine the best metric based on ability to distinguish signal from noise. [Kevin]
+\item Use the best IC approach, best profile comparison approach, and the best similarity metric determined above  to compare rates of decay for E, ExAttr(Q), and ExQ similarity. This will allow us to learn if Qualities are important for semantic similarity and, if so, at what granularity. [Prashanti]
+\end{enumerate}
+
 \section{Results}
 \subsection{Inference of evolutionary profiles}
 
