@@ -292,6 +292,18 @@ E = pT = p659
 In our application of searching a database of taxon profiles for a query gene, it is a concern when overall similarity includes MICAs deemed informative for taxa but are known to be substantially less informative among genes (positive disparity scores).  %%We selected a threshold of 0.25 for positive disparity scores based on the disparity distribution to generate a IC warning when those MICAs appear in similarity comparisons. 
 
 \subsection{Distinguishing semantic similarity from noise}
+
+\subsubsection{Goals}
+The aims of the semantic similarity experiment are the following: 
+\begin{enumerate}
+\item Determine the best approach to compute IC for semantic similarity. Prior literature either uses annotation frequency or the probability of a term being annotated to a profile to compute IC. No formal comparison has been made between the two approaches to determine which is better. Determine the best profile comparison approach between Best Pairs (asymmetric), Best Pairs (symmetric) and All Pairs. A total of 6 combinations (2 IC approaches, three profile comparison methods) will be evaluated here. [Prashanti]
+\item Determine if the similarity and expect scores can capture the decay in similarity as query profiles are diluted incrementally by replacing annotations randomly. Also determine if the similarity and expect scores have the power to distinguish signal from noise. [Kevin]
+\item Compare a set of semantic similarity metrics to determine the best metric based on ability to distinguish signal from noise. [Kevin]
+\item Use the best IC approach, best profile comparison approach, and the best similarity metric determined above  to compare rates of decay for E, ExAttr(Q), and ExQ similarity. This will allow us to learn if Qualities are important for semantic similarity and, if so, at what granularity. [Prashanti]
+\end{enumerate}
+
+
+
 We conducted an experiment to demonstrate that our similarity metrics combined with expect score statistics have the power to identify and distinguish real similarity distinguish it from background noise. 
 
 To demonstrate this, we created a database of faux evolutionary profiles. For every evolutionary profile $P$, in the KB, a faux profile ($P'$) of the same size was created and added to the database. These faux profiles were populated by selecting annotations with uniform probability and without replacement from the pool of annotations constituting real evolutionary profiles. Annotation redundancies in real evolutionary profiles were preserved in the annotation pool. Faux profiles might have annotation redundancy due to the nature of the randomized population approach. 
@@ -302,15 +314,22 @@ A new set of 207 faux query profiles were created by randomly selecting one prof
 
 To compute an expect score for a similarity comparison during the substitution experiment, the residual was computed by computing the difference between the observed similarity and the predicted similarity from the regression. This residual was studentized by dividing it by the standard deviation of the regression's residuals and used in the expect calculation (Equation \label{pvalue},\label{expect})
 
+\subsubsection{Semantic similarity metrics}
+The following similarity metrics were shortlisted for a comparison of performance based on distinguishing real similarity from noise:
+\begin{itemize}
+\item Resnik IC \cite{pesquita2009semantic} : The similarity of two terms is the IC of their MICA.
+\item Lin IC \cite{pesquita2009semantic} : 2 times the IC of the MICA divided by the sum of the two term ICs. Includes a relative measure of how far the terms are from the MICA. Lies in range [0,1]
+\item Schlicker IC \cite{pesquita2009semantic}: Modification of Lin IC. Multiplies Lin IC with (1- p(MICA)). Uses the probability of the MICA as a weight. Terms with more informative MICAs are considered more similar.
+\item Couto IC \cite{pesquita2009semantic}: Similarity of two terms is the mean IC of all LCAs. Uses all LCAs instead of just the most informative ancestor.
+\item Jaccard Index \cite{pesquita2009semantic}: Ratio of the number of common ancestors to all number of all ancestors 
+\item Hybrid Relative Specificity Similarity \cite{wu2013improving}: A hybrid measure that uses IC and edge distance. Uses distance between terms to the MICA, IC of the MICA, and IC difference between the terms and the most informative leaf subsumed by the term (Figure \ref{hrss}).
+\item BOQA: Uses bayesian networks to model semantic similarity queries and takes into account the probability of valid annotations missing in the query (true positives) and unrelated annotations being included in the query (false positives). 
+\end{itemize}
+ \begin{figure}
+ \centering
+ \includegraphics[width=1\textwidth]{hrss.jpg}
+ \caption{\label{hrss} Calculation of Hybrid Relative Specificity Similarity \cite{wu2013improving} } \end{figure}
 
-\subsubsection{Goals}
-The aims of the semantic similarity experiment are the following: 
-\begin{enumerate}
-\item Determine the best approach to compute IC for semantic similarity. Prior literature either uses annotation frequency or the probability of a term being annotated to a profile to compute IC. No formal comparison has been made between the two approaches to determine which is better. Determine the best profile comparison approach between Best Pairs (asymmetric), Best Pairs (symmetric) and All Pairs. A total of 6 combinations (2 IC approaches, three profile comparison methds) will be evaluated here. [Prashanti]
-\item Determine if the similarity and expect scores can capture the decay in similarity as query profiles are diluted incrementally by replacing annotations randomly. Also determine if the similarity and expect scores have the power to distinguish signal from noise. [Kevin]
-\item Compare a set of semantic similarity metrics to determine the best metric based on ability to distinguish signal from noise. [Kevin]
-\item Use the best IC approach, best profile comparison approach, and the best similarity metric determined above  to compare rates of decay for E, ExAttr(Q), and ExQ similarity. This will allow us to learn if Qualities are important for semantic similarity and, if so, at what granularity. [Prashanti]
-\end{enumerate}
 
 \section{Results}
 \subsection{Inference of evolutionary profiles}
